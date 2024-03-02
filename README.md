@@ -12,8 +12,8 @@ cd speech-buddy
 ```
 git clone https://github.com/uuutsav/speech-buddy-client.git
 ```
-- Check out serverver repository
- [Server Repo](https://github.com/facebook/create-react-app).
+- Check out server repository
+ [Server Repo](https://github.com/uuutsav/speech-buddy-server).
 
 
 ```
