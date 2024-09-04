@@ -4,13 +4,18 @@ import './App.css';
 import Navbar from './Components/Navbar';
 import Button from './Components/Button';
 import Prompts from './Components/Prompts';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { promptsState } from './Atoms/promptsAtom';
+import SpeechRecognitionComponent from './Components/SpeechRecognition';
+import { isListeningState, transcriptState } from './Atoms/transcriptsAtom';
+import { initializeSpeechRecognition } from './utils/speechRecognition';
 
 const App = () => {
     const [isStart, setIsStart] = useState(false)
     const [isResponse, setIsResponse] = useState(false)
     const setPrompts = useSetRecoilState(promptsState)
+    const [isListening, setIsListening] = useRecoilState(isListeningState);
+    const [transcript, setTranscript] = useRecoilState(transcriptState)
 
     const randomSentenceGenerator = async () => {
         try {
@@ -30,6 +35,39 @@ const App = () => {
         }
     }
 
+    const handleVoiceRecognition = () => {
+        const recognition = initializeSpeechRecognition();
+        if (recognition){
+            recognition.onresult = (event) => {
+                const currentTranscript = Array.from(event.results)
+                    .map(result => result[0])
+                    .map(result => result.transcript)
+                    .join('');
+        
+                setTranscript(currentTranscript);
+            }
+        
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error : ", event.error);
+            };
+        }
+        
+        const startListening = () => {
+            recognition.start();
+            setIsListening(true);
+        }
+    
+        const stopListening = () => {
+            recognition.stop();
+            setIsListening(false);
+        }
+
+        isListening ? stopListening() : startListening();
+        console.log("ehe???")
+        setIsListening(val => !val)
+
+    }
+
     return (
         <div className='App overflow-hidden h-[100vh] '>
             <Navbar />
@@ -46,11 +84,12 @@ const App = () => {
 
                 <div className={`p-2 border-2 border-gray-500 rounded-xl h-[70%] overflow-scroll`}>
                     <Prompts isResponse={isResponse} />
+                    <SpeechRecognitionComponent />
                     <Prompts isResponse={true} />
                 </div>
 
                 <div className="buttons">
-                    <Button text={"Tap to Speak"} />
+                    <Button text={!isListening ? "Tap to Speak" : "Tap to Stop"} onClickHandler={handleVoiceRecognition} />
                     <Button text={"Skip"} />
                 </div>
             </div>
