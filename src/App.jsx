@@ -48,7 +48,7 @@ const App = () => {
             }
         
             recognition.onerror = (event) => {
-                console.error("Speech recognition error : ", event.error);
+                console.error("Speech recognition error : ", event);
             };
         }
         
@@ -64,8 +64,7 @@ const App = () => {
 
         isListening ? stopListening() : startListening();
         console.log("ehe???")
-        setIsListening(val => !val)
-
+        setIsListening(!isListening)
     }
 
     return (

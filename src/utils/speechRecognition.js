@@ -4,6 +4,7 @@ export const initializeSpeechRecognition = () => {
         console.warn("Recognition not supported by browser")
         return;
     }
+    console.log("Web Speech API supported by browser (May produce false positive result");
     recognition.continuous = true;
     recognition.interimResults = true;
     recognition.lang = 'en-US';

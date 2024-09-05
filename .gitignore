@@ -24,3 +24,6 @@ yarn-error.log*
 
 # Secret Keys
 *.env
+
+#certificates
+/certificates/
