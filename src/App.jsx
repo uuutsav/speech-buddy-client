@@ -5,8 +5,7 @@ import Navbar from './Components/Navbar';
 import Button from './Components/Button';
 import Prompts from './Components/Prompts';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { promptsState, responsesState } from './Atoms/promptsAtom';
-import SpeechRecognitionComponent from './Components/SpeechRecognition';
+import { promptsState } from './Atoms/promptsAtom';
 import { isListeningState, transcriptState } from './Atoms/transcriptsAtom';
 import { initializeSpeechRecognition } from './utils/speechRecognition';
 import analyseMistakes from './utils/analyseMistakes';
@@ -16,9 +15,7 @@ const recognition = initializeSpeechRecognition();
 
 const App = () => {
     const [isStart, setIsStart] = useState(false)
-    const [isResponse, setIsResponse] = useState(false)
     const setPrompts = useSetRecoilState(promptsState)
-    const [responses, setResponses] = useRecoilState(responsesState)
     const [isListening, setIsListening] = useRecoilState(isListeningState);
     const setTranscript = useSetRecoilState(transcriptState)
 
@@ -26,47 +23,37 @@ const App = () => {
         try {
             const response = await axios.get("http://localhost:5000/api/text/generate")
             const data = response.data;
-            console.log(data);
-            setResponses(e => {
-                const temp = [...e,
-                data.text
-                ]
-                return temp;
-            })
             const prompt = {
                 text: data.text,
                 isResponse: false
             }
             setPrompts(prev => [...prev, prompt]);
             setIsStart(true);
-            setIsResponse(false);
         } catch (error) {
             console.warn("Error making get request: ", error)
         }
     }
 
     const handleVoiceRecognition = () => {
-        if (isListening){
+        if (isListening) {
             stopListening(recognition);
             return;
         }
 
-        if (recognition) {
-            recognition.onresult = (event) => {
-                transcript = Array.from(event.results)
-                    .map(result => result[0])
-                    .map(result => result.transcript)
-                    .join('');
+        recognition.onresult = (event) => {
+            transcript = Array.from(event.results)
+                .map(result => result[0])
+                .map(result => result.transcript)
+                .join('');
 
-                setTranscript(transcript);
-            }
-
-            recognition.onerror = (event) => {
-                console.error("Speech recognition error : ", event);
-            };
-
-            startListening(recognition);
+            setTranscript(transcript);
         }
+
+        recognition.onerror = (event) => {
+            console.error("Speech recognition error : ", event);
+        };
+
+        startListening(recognition);
     }
 
     const startListening = (recognition) => {
@@ -84,13 +71,13 @@ const App = () => {
 
         transcript && setPrompts(prev => {
             const mistakes = {
-                text: analyseMistakes(prev[prev.length -1].text, prompt.text),
+                text: analyseMistakes(prev[prev.length - 1].text, prompt.text),
                 isResponse: true,
                 isMistake: true
             }
             console.log(mistakes)
             return [...prev, prompt, mistakes]
-        } );
+        });
         setIsListening(false);
 
     }

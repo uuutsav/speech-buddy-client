@@ -5,10 +5,10 @@ const analyseMistakes = (text, transcript) => {
     const arrSpoken = _.words(_.lowerCase(transcript))
 
     const mistakes = _.difference(arrText, arrSpoken).filter(word => word.length > 2);
-    let str = mistakes.toString();
-    // for (let i = 0; i < mistakes.length; i++){
-    //     str += ' '  + mistakes[i];
-    // }
+    let str = "";
+    for (let i = 0; i < mistakes.length; i++){
+        str += " "  + mistakes[i];
+    }
     return str;
 }
 

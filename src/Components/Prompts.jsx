@@ -1,26 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { useRecoilState } from 'recoil';
+import React from 'react'
+import { useRecoilValue } from 'recoil';
 import { promptsState } from '../Atoms/promptsAtom';
-import { transcriptState } from '../Atoms/transcriptsAtom';
-import SpeechRecognitionComponent from './SpeechRecognition';
-import MistakesPrompt from './MistakesPrompt';
+import SpeechRecognitionComponent from './SpeechRecognitionComponent';
 
 const Prompts = ({ }) => {
-    const [prompts, setPrompts] = useRecoilState(promptsState);
-    const [text, setText] = useState("");
-    const [transcript, setTranscript] = useRecoilState(transcriptState);
-
-    useEffect(() => {
-        // setText(prompts[prompts.length - 1]);
-        // console.log("text: ", text)
-    }, [prompts])
+    const prompts = useRecoilValue(promptsState);
 
     return (
         <div >
             {prompts.map((prompt, i) => {
                 let bgColor = 'ml-auto bg-blue-500';
-                if (prompt.isResponse){
-                    if (prompt.isMistake){
+                if (prompt.isResponse) {
+                    if (prompt.isMistake) {
                         bgColor = "bg-red-600"
                     } else {
                         bgColor = "bg-green-500"

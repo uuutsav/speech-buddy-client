@@ -1,15 +1,10 @@
-import React, { useEffect } from 'react'
-import { useRecoilState } from 'recoil';
+import React from 'react'
+import { useRecoilValue } from 'recoil';
 import { isListeningState, transcriptState } from '../Atoms/transcriptsAtom';
-import { initializeSpeechRecognition } from '../utils/speechRecognition';
 
 const SpeechRecognitionComponent = () => {
-    const [transcript, setTranscript] = useRecoilState(transcriptState)
-    const [isListening, setIsListening] = useRecoilState(isListeningState)
-
-    useEffect(() => {
-        console.log(" transcripts : ", transcript)
-    } , [transcript])
+    const transcript = useRecoilValue(transcriptState)
+    const isListening = useRecoilValue(isListeningState)
 
     return (
         <div className={`${isListening ? "" : "hidden"} div m-2 flex`}>
