@@ -5,29 +5,39 @@ import Navbar from './Components/Navbar';
 import Button from './Components/Button';
 import Prompts from './Components/Prompts';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { promptsState } from './Atoms/promptsAtom';
+import { promptsState, responsesState } from './Atoms/promptsAtom';
 import SpeechRecognitionComponent from './Components/SpeechRecognition';
 import { isListeningState, transcriptState } from './Atoms/transcriptsAtom';
 import { initializeSpeechRecognition } from './utils/speechRecognition';
+import analyseMistakes from './utils/analyseMistakes';
+
+let transcript = '';
+const recognition = initializeSpeechRecognition();
 
 const App = () => {
     const [isStart, setIsStart] = useState(false)
     const [isResponse, setIsResponse] = useState(false)
     const setPrompts = useSetRecoilState(promptsState)
+    const [responses, setResponses] = useRecoilState(responsesState)
     const [isListening, setIsListening] = useRecoilState(isListeningState);
-    const [transcript, setTranscript] = useRecoilState(transcriptState)
+    const setTranscript = useSetRecoilState(transcriptState)
 
     const randomSentenceGenerator = async () => {
         try {
             const response = await axios.get("http://localhost:5000/api/text/generate")
             const data = response.data;
             console.log(data);
-            setPrompts(e =>{
+            setResponses(e => {
                 const temp = [...e,
-                    data.text
+                data.text
                 ]
                 return temp;
             })
+            const prompt = {
+                text: data.text,
+                isResponse: false
+            }
+            setPrompts(prev => [...prev, prompt]);
             setIsStart(true);
             setIsResponse(false);
         } catch (error) {
@@ -36,35 +46,53 @@ const App = () => {
     }
 
     const handleVoiceRecognition = () => {
-        const recognition = initializeSpeechRecognition();
-        if (recognition){
+        if (isListening){
+            stopListening(recognition);
+            return;
+        }
+
+        if (recognition) {
             recognition.onresult = (event) => {
-                const currentTranscript = Array.from(event.results)
+                transcript = Array.from(event.results)
                     .map(result => result[0])
                     .map(result => result.transcript)
                     .join('');
-        
-                setTranscript(currentTranscript);
+
+                setTranscript(transcript);
             }
-        
+
             recognition.onerror = (event) => {
                 console.error("Speech recognition error : ", event);
             };
-        }
-        
-        const startListening = () => {
-            recognition.start();
-            setIsListening(true);
-        }
-    
-        const stopListening = () => {
-            recognition.stop();
-            setIsListening(false);
-        }
 
-        isListening ? stopListening() : startListening();
-        console.log("ehe???")
-        setIsListening(!isListening)
+            startListening(recognition);
+        }
+    }
+
+    const startListening = (recognition) => {
+        recognition ? recognition.start() : console.log("Recogniiton undefined");
+        setIsListening(true);
+    }
+
+    const stopListening = (recognition) => {
+        recognition.stop();
+        const prompt = {
+            text: transcript,
+            isResponse: true
+        }
+        console.log("Listening stopped: ", prompt)
+
+        transcript && setPrompts(prev => {
+            const mistakes = {
+                text: analyseMistakes(prev[prev.length -1].text, prompt.text),
+                isResponse: true,
+                isMistake: true
+            }
+            console.log(mistakes)
+            return [...prev, prompt, mistakes]
+        } );
+        setIsListening(false);
+
     }
 
     return (
@@ -82,14 +110,12 @@ const App = () => {
                 </div>
 
                 <div className={`p-2 border-2 border-gray-500 rounded-xl h-[70%] overflow-scroll`}>
-                    <Prompts isResponse={isResponse} />
-                    <SpeechRecognitionComponent />
-                    <Prompts isResponse={true} />
+                    <Prompts />
                 </div>
 
                 <div className="buttons">
                     <Button text={!isListening ? "Tap to Speak" : "Tap to Stop"} onClickHandler={handleVoiceRecognition} />
-                    <Button text={"Skip"} />
+                    <Button text={"Next"} onClickHandler={randomSentenceGenerator} />
                 </div>
             </div>
         </div>
