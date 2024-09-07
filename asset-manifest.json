@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/speech-buddy-client/static/css/main.731c8518.css",
-    "main.js": "/speech-buddy-client/static/js/main.332e925e.js",
+    "main.js": "/speech-buddy-client/static/js/main.9fbe4f5b.js",
     "static/js/592.1564ae51.chunk.js": "/speech-buddy-client/static/js/592.1564ae51.chunk.js",
     "index.html": "/speech-buddy-client/index.html",
     "main.731c8518.css.map": "/speech-buddy-client/static/css/main.731c8518.css.map",
-    "main.332e925e.js.map": "/speech-buddy-client/static/js/main.332e925e.js.map",
+    "main.9fbe4f5b.js.map": "/speech-buddy-client/static/js/main.9fbe4f5b.js.map",
     "592.1564ae51.chunk.js.map": "/speech-buddy-client/static/js/592.1564ae51.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.731c8518.css",
-    "static/js/main.332e925e.js"
+    "static/js/main.9fbe4f5b.js"
   ]
 }
