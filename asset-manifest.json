@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/speech-buddy-client/static/css/main.9f9639a2.css",
+    "main.js": "/speech-buddy-client/static/js/main.96d18a32.js",
+    "static/js/592.1564ae51.chunk.js": "/speech-buddy-client/static/js/592.1564ae51.chunk.js",
+    "index.html": "/speech-buddy-client/index.html",
+    "main.9f9639a2.css.map": "/speech-buddy-client/static/css/main.9f9639a2.css.map",
+    "main.96d18a32.js.map": "/speech-buddy-client/static/js/main.96d18a32.js.map",
+    "592.1564ae51.chunk.js.map": "/speech-buddy-client/static/js/592.1564ae51.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9f9639a2.css",
+    "static/js/main.96d18a32.js"
+  ]
+}
