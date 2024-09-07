@@ -14,6 +14,7 @@ import data from "./data/Facts.mjs"
 
 // let transcript = '';
 const recognition = initializeSpeechRecognition();
+document.title = "Speech Buddy: Spoken English Practice App - By Kumar Utsav"
 
 const App = () => {
     const [isStart, setIsStart] = useState(false)
@@ -24,7 +25,7 @@ const App = () => {
     const randomSentenceGenerator = async () => {
         try {
             // const response = await axios.get("http://localhost:5000/api/text/generate")
-            const rand = getRandomInt(0, data.length -1)
+            const rand = getRandomInt(0, data.length - 1)
             const sentence = data[rand];
             // const data = response.data;
             const prompt = {
@@ -92,19 +93,27 @@ const App = () => {
 
             {/* Start Screen  */}
             <div className={` ${isStart ? "hidden" : "flex"} start z-50 h-[90vh] w-[100vw] flex flex-col justify-center items-center `}>
-                <Button text={"Start"} onClickHandler={randomSentenceGenerator} className={`w-[80vw] h-[10vh]`} />
+                <Button text={"Start"} onClickHandler={randomSentenceGenerator} className={`w-[80vw] h-[10vh] `} />
             </div>
 
-            <div id='content' className="content px-3 h-[90vh] flex flex-col justify-between ">
-                <div className="instruction text-center p-3 text-2xl font-semibold">
-                    {"Speak this sentence"}
+            <div id='content' className="content px-3 h-[90vh] flex flex-col justify-between md:px-[23vw] ">
+                <div className="instruction text-center p-3 text-xl font-semibold group cursor-pointer ">
+                    <h3>
+                        Speak and Improve your Spoken English
+                    </h3>
+                    <h4 className='text-sm text-gray-500 hidden group-hover:block duration-125'>
+                        {"Click Next to generate a new sentence"}
+                    </h4>
+                    <h4 className='text-sm text-gray-500 hidden group-hover:block duration-125'>
+                        {"Repeat the sentance and know the words you pronounced wrong."}
+                    </h4>
                 </div>
 
-                <div className={`p-2 border-2 border-gray-500 rounded-xl h-[70%] overflow-scroll`}>
+                <div className={`p-2 border-2 border-gray-500 rounded-xl h-[70%] overflow-scroll scrollbar scrollbar-thumb-blue-500 `}>
                     <Prompts />
                 </div>
 
-                <div className="buttons">
+                <div className="buttons flex flex-col items-center">
                     <Button text={!isListening ? "Tap to Speak" : "Tap to Stop"} onClickHandler={handleVoiceRecognition} />
                     <Button text={"Next"} onClickHandler={randomSentenceGenerator} />
                 </div>
