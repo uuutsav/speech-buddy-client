@@ -97,7 +97,7 @@ const App = () => {
             </div>
 
             <div id='content' className="content px-3 h-[90vh] flex flex-col justify-between md:px-[23vw] ">
-                <div className="instruction text-center p-3 text-xl font-semibold group cursor-pointer ">
+                <div className="instruction text-center p-3 h-1/10 text-xl font-semibold group cursor-pointer ">
                     <h3>
                         Speak and Improve your Spoken English
                     </h3>
@@ -109,11 +109,11 @@ const App = () => {
                     </h4>
                 </div>
 
-                <div className={`p-2 border-2 border-gray-500 rounded-xl h-[70%] overflow-scroll scrollbar scrollbar-thumb-blue-500 `}>
+                <div className={`p-2 border-2 border-gray-500 h-8/10 rounded-xl h-[70%] overflow-scroll scrollbar scrollbar-thumb-blue-500 `}>
                     <Prompts />
                 </div>
 
-                <div className="buttons flex flex-col items-center">
+                <div className="buttons h-1/10 flex flex-col items-center">
                     <Button text={!isListening ? "Tap to Speak" : "Tap to Stop"} onClickHandler={handleVoiceRecognition} />
                     <Button text={"Next"} onClickHandler={randomSentenceGenerator} />
                 </div>
