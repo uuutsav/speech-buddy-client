@@ -5,7 +5,7 @@ export const initializeSpeechRecognition = () => {
         return;
     }
     console.log("Web Speech API supported by browser (May produce false positive result");
-    recognition.continuous = true;
+    recognition.continuous = false; // this interface made no sense. Turning it on made results funny on android browsers. Shutting it off still gives the contineous results but fixes the problems.`
     recognition.interimResults = true;
     recognition.lang = 'en-US';
 

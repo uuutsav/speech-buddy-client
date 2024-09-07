@@ -9,22 +9,26 @@ import { promptsState } from './Atoms/promptsAtom';
 import { isListeningState, transcriptState } from './Atoms/transcriptsAtom';
 import { initializeSpeechRecognition } from './utils/speechRecognition';
 import analyseMistakes from './utils/analyseMistakes';
+import { getRandomInt } from './utils/RandomIntGenerator.mjs';
+import data from "./data/Facts.mjs"
 
-let transcript = '';
+// let transcript = '';
 const recognition = initializeSpeechRecognition();
 
 const App = () => {
     const [isStart, setIsStart] = useState(false)
     const setPrompts = useSetRecoilState(promptsState)
     const [isListening, setIsListening] = useRecoilState(isListeningState);
-    const setTranscript = useSetRecoilState(transcriptState)
+    const [transcript, setTranscript] = useRecoilState(transcriptState)
 
     const randomSentenceGenerator = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/text/generate")
-            const data = response.data;
+            // const response = await axios.get("http://localhost:5000/api/text/generate")
+            const rand = getRandomInt(0, data.length -1)
+            const sentence = data[rand];
+            // const data = response.data;
             const prompt = {
-                text: data.text,
+                text: sentence,
                 isResponse: false
             }
             setPrompts(prev => [...prev, prompt]);
@@ -41,12 +45,12 @@ const App = () => {
         }
 
         recognition.onresult = (event) => {
-            transcript = Array.from(event.results)
+            let newTranscript = Array.from(event.results)
                 .map(result => result[0])
                 .map(result => result.transcript)
                 .join('');
 
-            setTranscript(transcript);
+            setTranscript(newTranscript);
         }
 
         recognition.onerror = (event) => {
