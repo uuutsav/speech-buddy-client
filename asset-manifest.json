@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/speech-buddy-client/static/css/main.6f3f58dd.css",
-    "main.js": "/speech-buddy-client/static/js/main.44ebe00c.js",
-    "static/js/592.1564ae51.chunk.js": "/speech-buddy-client/static/js/592.1564ae51.chunk.js",
+    "main.css": "/speech-buddy-client/static/css/main.ce4c1a74.css",
+    "main.js": "/speech-buddy-client/static/js/main.691109b0.js",
+    "static/js/592.599f76a2.chunk.js": "/speech-buddy-client/static/js/592.599f76a2.chunk.js",
     "index.html": "/speech-buddy-client/index.html",
-    "main.6f3f58dd.css.map": "/speech-buddy-client/static/css/main.6f3f58dd.css.map",
-    "main.44ebe00c.js.map": "/speech-buddy-client/static/js/main.44ebe00c.js.map",
-    "592.1564ae51.chunk.js.map": "/speech-buddy-client/static/js/592.1564ae51.chunk.js.map"
+    "main.ce4c1a74.css.map": "/speech-buddy-client/static/css/main.ce4c1a74.css.map",
+    "main.691109b0.js.map": "/speech-buddy-client/static/js/main.691109b0.js.map",
+    "592.599f76a2.chunk.js.map": "/speech-buddy-client/static/js/592.599f76a2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6f3f58dd.css",
-    "static/js/main.44ebe00c.js"
+    "static/css/main.ce4c1a74.css",
+    "static/js/main.691109b0.js"
   ]
 }
