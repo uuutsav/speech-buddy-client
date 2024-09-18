@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import './App.css';
 import Navbar from './Components/Navbar';
 import Button from './Components/Button';
@@ -11,6 +10,8 @@ import { initializeSpeechRecognition } from './utils/speechRecognition';
 import analyseMistakes from './utils/analyseMistakes';
 import { getRandomInt } from './utils/RandomIntGenerator.mjs';
 import data from "./data/Facts.mjs"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 // let transcript = '';
 const recognition = initializeSpeechRecognition();
@@ -88,25 +89,57 @@ const App = () => {
     }
 
     return (
-        <div className='App overflow-hidden h-[100vh] '>
+        <div className='App overflow-hidden h-[100vh] bg-gray-200'>
             <Navbar />
 
             {/* Start Screen  */}
             <div className={` ${isStart ? "hidden" : "flex"} start z-50 h-[90vh] w-[100vw] flex flex-col justify-center items-center `}>
-                <Button text={"Start"} onClickHandler={randomSentenceGenerator} className={`w-[80vw] h-[10vh] `} />
+                <div className='left-parent p-2 lg:w-1/2 flex flex-col justify-center '>
+                    <h1 className='text-7xl lg:text-9xl text-blue-900 font-bold z-50 tracking-wider '>
+                        Speech Buddy
+                    </h1>
+                    <h2 className='text-3xl font-semibold my-3 text-blue-900'>
+                        Practice spoken English with instant feedback on pronunciation
+                    </h2>
+                    <hr className='h-2 w-1/5 my-8 bg-blue-900'></hr>
+                    <p className='text-xl my-5 '>
+                        Generate random sentences, speak them aloud, and receive real-time feedback on any mispronounced words.
+                    </p>
+                    <div className="buttons my-5 flex gap-5 ">
+                        <div
+                            className='px-8 py-5 w-1/2 text-2xl md:text-3xl text-center bg-blue-500 rounded-full border-2 border-black cursor-pointer duration-150 hover:scale-110 '
+                            onClick={randomSentenceGenerator}
+                        >
+                            Start
+                        </div>
+                    </div>
+                    <div className="socials mt-8 px-2 text-4xl flex gap-5  ">
+                        <a
+                            href="http://www.linkedin.com/in/kumar-utsav-638914239/"
+                            target='_blank'
+                            className='cursor-pointer duration-150 hover:scale-125'
+                        >
+                            <FontAwesomeIcon icon={faLinkedin} />
+                        </a>
+                        <a
+                            href="https://github.com/uuutsav//"
+                            target='_blank'
+                            className='cursor-pointer duration-150 hover:scale-125'
+                        >
+                            <FontAwesomeIcon icon={faGithub} />
+                        </a>
+                    </div>
+                </div>
+                {/* <Button text={"Start"} onClickHandler={randomSentenceGenerator} className={`w-[80vw] h-[10vh] `} /> */}
             </div>
 
             <div id='content' className="content px-3 h-[90vh] flex flex-col justify-between md:px-[23vw] ">
-                <div className="instruction text-center p-3 h-1/10 text-xl font-semibold group cursor-pointer ">
+                <div className="instruction p-3 h-1/10 text-xl font-semibold group cursor-pointer ">
                     <h3>
-                        Speak and Improve your Spoken English
+                        Click <span className='text-green-500'>Tap to Speak</span> to start recording your voice.<br></br>
+                        Click <span className='text-blue-500'>Next</span> to generate the next sentence.<br></br>
+                        Words highlighted in <span className='text-red-500'>Red</span> indicate pronunciation errors.
                     </h3>
-                    <h4 className='text-sm text-gray-500 hidden group-hover:block duration-125'>
-                        {"Click Next to generate a new sentence"}
-                    </h4>
-                    <h4 className='text-sm text-gray-500 hidden group-hover:block duration-125'>
-                        {"Repeat the sentance and know the words you pronounced wrong."}
-                    </h4>
                 </div>
 
                 <div className={`p-2 border-2 border-gray-500 h-8/10 rounded-xl h-[70%] overflow-scroll scrollbar scrollbar-thumb-blue-500 `}>
