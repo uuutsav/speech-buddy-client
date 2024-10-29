@@ -22,5 +22,5 @@ npm i
 npm run start
 ```
 ## Screenshots
-![Screenshot from 2024-09-13 02-39-53](https://github.com/user-attachments/assets/6b1f3e8c-2b9a-432d-b95c-677846dc5d4c)
-![1726175757969](https://github.com/user-attachments/assets/91c62aa2-3f63-45fc-b9bb-a40dbdc70f46)
+
+![Screenshot from 2024-10-30 01-01-48](https://github.com/user-attachments/assets/1d239645-1d75-4a24-95a1-157d9a34774c)
